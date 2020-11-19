@@ -92,10 +92,10 @@ var ExcelFile = function (_React$Component) {
       };
 
       _react2.default.Children.forEach(this.props.children, function (sheet) {
-        if (typeof sheet.props.dataSet === "undefined" || sheet.props.dataSet.length === 0) {
+        if ((typeof sheet.props.dataSet === "undefined" || typeof sheet.props.dataSet !== "function") && sheet.props.dataSet.length === 0) {
           wb.Sheets[sheet.props.name] = (0, _DataUtil.excelSheetFromAoA)(_this2.createSheetData(sheet));
         } else {
-          wb.Sheets[sheet.props.name] = (0, _DataUtil.excelSheetFromDataSet)(sheet.props.dataSet);
+          wb.Sheets[sheet.props.name] = (0, _DataUtil.excelSheetFromDataSet)(typeof sheet.props.dataSet === "function" ? sheet.props.dataSet() : sheet.props.dataSet);
         }
       });
 
