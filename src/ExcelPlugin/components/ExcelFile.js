@@ -88,7 +88,7 @@ class ExcelFile extends React.Component {
 
     React.Children.forEach(this.props.children, sheet => {
       if (
-        typeof sheet.props.dataSet === "undefined" ||
+        typeof sheet.props.dataSet === "undefined" || typeof sheet.props.dataSet !== "function"
         sheet.props.dataSet.length === 0
       ) {
         wb.Sheets[sheet.props.name] = excelSheetFromAoA(
@@ -96,7 +96,7 @@ class ExcelFile extends React.Component {
         );
       } else {
         wb.Sheets[sheet.props.name] = excelSheetFromDataSet(
-          sheet.props.dataSet
+          typeof sheet.props.dataSet === "function" ? sheet.props.dataSet() : sheet.props.dataSet
         );
       }
     });
